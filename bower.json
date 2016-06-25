@@ -18,7 +18,7 @@
   "license": "MIT",
   "ignore": [
     ".gitattributes",
-    ".gitignore".
+    ".gitignore",
     "example",
     "bundleconfig.json"
   ],
