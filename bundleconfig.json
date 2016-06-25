@@ -1,0 +1,20 @@
+[
+  {
+    "outputFileName": "angularGroupSort.min.js",
+    "inputFiles": [
+      "angularGroupSort.js"
+    ]
+  },
+  {
+    "outputFileName": "example/groupingDirective.min.js",
+    "inputFiles": [
+      "example/groupingDirective.js"
+    ]
+  },
+  {
+    "outputFileName": "example/groupSortExample.min.js",
+    "inputFiles": [
+      "example/groupSortExample.js"
+    ]
+  }
+]
