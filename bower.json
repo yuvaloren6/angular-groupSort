@@ -1,8 +1,8 @@
 {
-  "name": "angular-groupSort",
+  "name": "angular-groupsort",
   "decription": "GroupSort - Group objects into categories as deep as you wish - Sort categories and items based ob your criteria",
   "main": [
-    "./angular-GroupSort.js"
+    "./angular-Groupsort.js"
   ],
   "dependencies": {
     "angular": ">=1.5.6"
