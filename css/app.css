@@ -1,0 +1,39 @@
+﻿.category {
+    width: auto;
+    height:auto;
+    position: relative;
+    text-align:left;
+    display: inline-block;
+}
+
+.categoryName {
+    min-width: 140px;
+    display:inline-block;
+    text-align:center;
+}
+
+.title {
+    width:800px;
+    text-align: center; 
+    text-decoration: underline;
+    margin-top: 10px;
+    font-size: large;
+}
+
+.bowerInstall {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: lightgray;
+    margin-bottom: 100px;
+    padding: 20px;
+    font-size: x-large;
+    min-width: 400px;
+}
+
+body {
+    margin: 20px;
+}
+
+
+
+
