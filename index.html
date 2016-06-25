@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>angular-groupsort by yuval oren</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+
+    <script src="angular.js"></script>
+    <script src="angular-groupsort.js"></script>
+    <script src="groupingDirective.js"></script>
+    <script src="groupSortExample.js"></script>
+
+  </head>
+  <body ng-app="exampleCtrl">
+    <section class="page-header">
+      <h1 class="project-name">angular-groupsort</h1>
+      <h2 class="project-tagline">Revive - bring &#39;dead&#39; html alive with select-like behavior</h2>
+  
+      <a href="https://github.com/yuvaloren6/angular-revive" class="btn">View on GitHub</a>
+      <a href="https://github.com/yuvaloren6/angular-revive/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/yuvaloren6/angular-revive/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+    <p>
+        The <b>group And Sort</b> is a transcluding directive to will group an array of objects into categories as deep as you like.
+        After grouping your objects into categories, you may sort your categories at every level and finally, sort your items.
+    </p>
+    <p>
+        Objects may not be fully categorised, if some of the objects do not have as many sub-categories as other objects, they simply remain at the
+        group into which they were categorised.
+    </p>
+    <p>
+        Grouping and sorting is not mandatory. You can group item and skip sort or skip grouping and justsort items. (however, if you do not group -
+        you cannot sort by categories).
+    </p>
+    Grouping and sorting of categories and items is acheived by calling your assigned grouping and sorting functions as described bellow.
+    <p>
+        The <b>group And Sort</b> directive does nothing until data is requested by its transcluded directive. You call the directive's 'data'
+        function in order to retreive the groupd and sorted objects which are encapsulated in a convinient-to-retreive data structure.
+    </p>
+    <h3>Dependencies</h3>
+    The <b>Angular Group and Sort</b> sole dependency is on AngularJS 1.5.6 [get AngularJS](http://angularjs.org/)
+    <h3>Demo</h3>
+    Below you can see a grouping of the american and National Baseball teams into divisions. The leage, divisions and clubs are than sorted in
+    asccending order. Since, I "forgot" to sub-categorise the "New York Yankees" and the "Boston Red Sox", both teams were correctly grouped into
+    the American leage, but both appear at the same level as the leage's divisions.
+
+    <div group-sort objects="objects" group-by="groupBy" sort-categories="sortCategories" sort-items="sortItems">
+        <grouping-tree></grouping-tree>
+    </div>
+    <h3 style="margin-top:30px">Properties</h3>
+    The directive exihibts the following properties:
+    <h4>objects</h4>
+    An array of objects you wish to group and/or sort.
+    <h4>group-by</h4>
+    The name of the grouping function used for dividing objects into different caregories. The function will be passed an object and a level
+    (specifying grouping depth) one at a time until all objects are categorised. The function is expected to return a string (the category name) or
+    null if the item has been fully categorised.
+    <pre>
+    <code>
+groupingFunction = function(object, level) {
+    your grouping logic ...
+    return categoryName or return null
+}
+        </code>
+    </pre>
+    <h4>sort-categories</h4>
+    The name of sorting function used to sort categories (only when grouping is in effect). The function will be passed two category names at a
+    time and should return a value less than zero if the first category should be ordered before the second category, zero if the
+    categories may appear in any order, or a value greater than zero if the second category should be ordered before the first.
+    <pre>
+    <code>
+categorySortingFunction = function(categoryName1, categoryName2) {
+	your sorting logic ...
+	return -1 // category1 appears before category2
+	or return 0 // either one may appear before the other
+	or return 1 // category2 appears before category1
+}
+        </code>
+    </pre>
+    <h4>sort-items</h4>
+    The name of sorting function used to sort the inputed objects (regardless of grouping and/or categry sorting). The function will be passed
+    two objects at a time and should return a value less than zero if the first object should be ordered before the second object,
+    zero if the objects may appear in any order, or a value greater than zero if the second object should be ordered before the first.
+    <pre>
+    <code>
+itemSortingFunction=function(obj1, obj2) {
+    your sorting logic ...
+    return -1 // obj1 appears before obj2
+    or return 0 // either one may appear before the other
+    or return 1 // obj2 appears before obj1
+}
+        </code>
+    </pre>
+    <h3>Methods</h3>
+    <h4>data</h4>
+    The data function should be called by the transcluded directive in order to pull its data from the <b>Group and Sort</b> directive. Only then will the directive
+    proccess its input array of objects - group and sort (categories and/or items) if needed - before returning an array of output objects as specified bellow:
+    <pre>
+        <code>
+[
+    {
+        category: categoryName,
+        objects: [ array of objects ]
+    },
+]
+        </code>
+    </pre>
+    <p>
+        The value of the top-most category will always be null as this is the root of the catgories tree.
+    </p>
+    <p>
+        If no grouping is requested, then all the objects are present in the 'objects' array. (the objects may still be sorted, if a sort-items function was provided
+        to the directive.)
+    </p>
+    <p>
+        If grouping is requested, then each category will be manifested in the 'object' array as an object whose properties are 'category' and 'objects' and whose behavior imitates
+        the top-most object depicted above. At each level objects who are not categorised are collected into an array which is the last element of the objects array.
+    </p>
+    <p>
+        So, categorised objects are always an object as the one described above, and done categorised objects if any are in an array who is the last element in the objects
+        array.
+    </p>
+    <p>
+        IF all your objects are fully categorised, then you need not worry about not fully categorised items. All your objects will like the one above, and all your objects
+        will be at leafs.
+    </p>
+    <h3>Install with Bower</h3>
+    <div class="bowerInstall">$ bower install angular-groupsort</div>
+</body>
+</html>
