@@ -1,5 +1,3 @@
-﻿/// <reference path="bower_components/angular/angular.js" />
-
 angular.module('angular-groupSort', [])
 .constant('EmptyElement', '<div ng-transclude></<div>')
 .constant('NoGrouping', "!@#$%^&*()")

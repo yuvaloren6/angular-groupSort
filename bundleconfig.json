@@ -16,5 +16,17 @@
     "inputFiles": [
       "example/groupSortExample.js"
     ]
+  },
+  {
+    "outputFileName": "example/angular-groupsort.min.js",
+    "inputFiles": [
+      "example/angular-groupsort.js"
+    ]
+  },
+  {
+    "outputFileName": "angular-groupsort.min.js",
+    "inputFiles": [
+      "angular-groupsort.js"
+    ]
   }
 ]
