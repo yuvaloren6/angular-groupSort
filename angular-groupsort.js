@@ -118,20 +118,21 @@ angular.module('angular-groupSort', [])
                     // if, however, these are uncategorised objects - we create a group with null category name and array of objects
                     if (angular.isDefined(groups[NoGrouping])) {
                         if (leaf) {
-                            return addGroup(categoryName, groups[NoGrouping]);
+                            return addGroup(categoryName, groups[NoGrouping], true);
                         } else {
                             data.push(groups[NoGrouping]);
                         }
                     }
                 }
 
-                return (leaf) ? data : addGroup(categoryName, data);
+                return (leaf) ? data : addGroup(categoryName, data, false);
             }
 
             // add group to array
-            var addGroup = function (categoryName, objects) {
+            var addGroup = function (categoryName, objects, isLeaf) {
                 var obj = {};
 
+                obj.isLeaf = isLeaf;
                 obj.categoryName = (null !== categoryName) ? categoryName : "";
                 obj.objects = objects;
 
@@ -170,7 +171,7 @@ angular.module('angular-groupSort', [])
                 if (angular.isDefined(sortedCategories)) {
                     data = addGroups(groups, sortedCategories, null)
                 } else {
-                    data.push(addGroup(null, groups));
+                    data.push(addGroup(null, groups, true));
                 }
 
                 return data;

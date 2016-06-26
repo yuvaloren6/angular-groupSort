@@ -63,6 +63,7 @@ proccess its input array of objects - group and sort (categories and/or items) i
 	[
 		{
 			category: categoryName,
+           isLeaf: true / false
 			objects: [ array of objects ]
 		},
 		....
@@ -73,13 +74,14 @@ The value of the top-most category will always be null as this is the root of th
 If no grouping is requested, then all the objects are present in the 'objects' array. (the objects may still be sorted, if a sort-items function was provided 
 to the directive.)
 
-If grouping is requested, then each category will be manifested in the 'object' array as an object whose properties are 'category' and 'objects' and whose behavior imitates
- the top-most object depicted above. At each level objects who are not categorised are collected into an array which is the last element of the objects array.
+If grouping is requested, then each category will be manifested in the 'object' array as an object whose properties are 'category' 'isLeaf' and 'objects' as the 
+object depicted above. At each level objects who are cannot be further categorised (as the rest) are collected into an array which is the last element of the 
+objects array.
 
-So, categorised objects are always an object as the one described above, and done categorised objects if any are in an array who is the last element in the objects 
-array. 
+If the value of property 'isLeaf' equals 'true' then you know that there are no further sub-categories in this group and that the objects array contains (fully categorised) plain
+ objects only.
 
-IF all your objects are fully categorised, then you need not worry about not fully categorised items. All your objects will like the one above, and all your objects 
+If all your objects are fully categorised, then you need not worry about not fully categorised items. All your objects will like the one above, and all your objects 
 will be at leafs.
 
 ### Install with Bower
