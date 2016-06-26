@@ -2,7 +2,7 @@
 <html ng-app="groupExample">
 <head>
     <title></title>
-	<meta charset="utf-8" />
+    <meta charset="utf-8" />
 
     <link href="css/bootstrap.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
@@ -89,10 +89,11 @@ itemSortingFunction=function(obj1, obj2) {
     The data function should be called by the transcluded directive in order to pull its data from the <b>Group and Sort</b> directive. Only then will the directive
     proccess its input array of objects - group and sort (categories and/or items) if needed - before returning an array of output objects as specified bellow:
     <pre>
-        <code>
+    <code>
 [
     {
         category: categoryName,
+        isLeaf: true / false
         objects: [ array of objects ]
     },
 ]
@@ -106,18 +107,21 @@ itemSortingFunction=function(obj1, obj2) {
         to the directive.)
     </p>
     <p>
-        If grouping is requested, then each category will be manifested in the 'object' array as an object whose properties are 'category' and 'objects' and whose behavior imitates
-        the top-most object depicted above. At each level objects who are not categorised are collected into an array which is the last element of the objects array.
+        If grouping is requested, then each category will be manifested in the 'object' array as an object whose properties are 'category' 'isLeaf'
+        and 'objects' as the object depicted above. At each level objects who are cannot be further categorised (as the rest) are collected
+        into an array which is the last element of the objects array.
     </p>
     <p>
-        So, categorised objects are always an object as the one described above, and done categorised objects if any are in an array who is the last element in the objects
-        array.
+        If the value of property 'isLeaf' equals 'true' then you know that there are no further sub-categories in this group and that the objects array contains (fully categorised) plain
+        objects only.
     </p>
     <p>
-        IF all your objects are fully categorised, then you need not worry about not fully categorised items. All your objects will like the one above, and all your objects
+        If all your objects are fully categorised, then you need not worry about not fully categorised items. All your objects will like the one above, and all your objects
         will be at leafs.
     </p>
     <h3>Install with Bower</h3>
+    When you install with bower, you only get the javascript source file and the README.md file. If you want to download the example,
+    get the zip or tar files from Github.
     <div class="bowerInstall">$ bower install angular-groupsort</div>
 </body>
 </html>
