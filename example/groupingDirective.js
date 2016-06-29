@@ -1,18 +1,26 @@
 ﻿/// <reference path="bower_components/angular/angular.js" />
 
-angular.module('groupingExample', ['angular-groupSort'])
+angular.module('groupingTree', ['angular-groupSort', 'ui.bootstrap'])
 .directive('groupingTree', function () {
     return {
+        scope: {
+            title: '@'
+        },
         require: "^groupSort",
-        template: '<div class="title">{{groups.categoryName}}<div> \
-                        <categories ng-repeat="group in groups.objects" category="group"></categories> \
-                    </div></div>',
+        template: '<div class="btn-group" uib-dropdown style="width:250px"> \
+                                <button id="split-button" type="button" class="btn btn-success">{{title}}</button> \
+                                <button type="button" class="btn btn-success" uib-dropdown-toggle> \
+                                <span class="caret"></span> \
+                                <span class="sr-only">Split button!</span> \
+                                </button> \
+                                <ul style="width:220px" class="dropdown-menu" uib-dropdown-menu aria-labelledby="split-button"> \
+                                    <categories ng-repeat="group in groups.objects" category="group" first="{{$first == true}}"></ul> \
+                           </div>',
         restrict: 'E',
         replace: true,
         link: function (scope, element, attrs, groupAndSortCtrl) {
 
             scope.groups = groupAndSortCtrl.data();
-            scope.groups.categoryName = 'Baseball teams';
         },
         controller: function ($scope, $element, $attrs) {
 
@@ -24,17 +32,24 @@ angular.module('groupingExample', ['angular-groupSort'])
         restrict: "E",
         replace: true,
         scope: {
-            category: '='
+            first: '@',
+            category: '=',
         },
         link: function (scope, element, attrs) {
-            var div, innerDiv, index;
+            var div, index;
             var width, left;
 
-            // add category name
-            if (Utilities.isString(scope.category.categoryName)) {
-
-                div = angular.element('<div class="categoryName" style="margin-top:20px">{{category.categoryName}}</div>');
-                innerDiv = angular.element('<div class="category">');
+            if (scope.category.isLeaf) {
+                if ("true" !== scope.first) { element.append('<li><hr></li>'); }
+                element.append('<li style="font-style: italic; font-weight: bold; color: grey">{{category.categoryName}}</li> \
+                                <ul style="list-style-type: none;"> \
+                                    <li ng-repeat="object in category.objects" style="margin-top:5px; margin-left:10px"> \
+                                        <a href="#" ng-click="clickEvent($event)"><img style="margin-right:5px" src="{{object.icon}}" height="16" width="16"><span>{{object.name}}<span></a></li> \
+                                </ul>');
+            } else {
+                // add non leaf category
+                if ("true" !== scope.first) { element.append('<li><hr></li>'); }
+                element.append('<li style="font-style: italic; font-weight: bold; color: grey">{{category.categoryName}}</li>');
 
                 // add sub categories
                 if (angular.isArray(scope.category.objects)) {
@@ -42,25 +57,24 @@ angular.module('groupingExample', ['angular-groupSort'])
                     for (var i = 0; i < scope.length; i++) {
                         (function () {
                             var index = i;
-                            // since an array is also an object, but not vice versa we need to check for arrays first
-                            // these are the objects that are were not fully categorised. i.e. they are not in the leafs 
-                            if (angular.isArray(scope.category.objects[index])) {
-                                innerDiv.append("<div class='categoryName' style='float: left; min-width:0px'> \
-                                                    <img ng-repeat='obj in category.objects[" + index + "]' src='{{obj.icon}}' alt='{{obj.name}}' width='32' height='32'></img></div></div>");
-                            } else {
-                                if (angular.isObject(scope.category.objects[index])) {
-                                    innerDiv.append("<div class='categoryName''><categories category='category.objects[" + index + "]'></catgories></div>");
-                                }
+
+                            if (angular.isObject(scope.category.objects[index])) {
+                                element.append('<ul style="list-style-type: none;"> \
+                                                    <categories category="category.objects[' + index + ']" first="' + (index == 0) + '"></catgories> \
+                                                </ul>');
                             }
                         })();
                     }
                 }
-                div.append(innerDiv);
-                element.append(div);
-            } else {
-                element.append('<div class="category"><img src="{{category.icon}}" alt="{{category.name}}" width="32" height="32" border="0"></img></div');
             }
-            $compile(element.contents())(scope)
+            $compile(element.contents())(scope);
+        },
+        controller: function ($scope, $element, $attrs) {
+
+            $scope.clickEvent = function (event) {
+
+                event.preventDefault();
+            };
         }
     }
 })

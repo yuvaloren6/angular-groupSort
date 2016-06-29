@@ -1,9 +1,9 @@
-﻿angular.module('groupExample', ['angular-groupSort', 'groupingExample'])
-.controller('exampleCtrl', function ($scope, $timeout) {
+﻿angular.module('groupExample', ['angular-groupSort', 'groupingTree'])
+.controller('exampleCtrl', function ($scope, $timeout, $filter) {
 
-    $scope.objects = [
-        { name: "New York Yankees", category: "AL", icon: "./icons/nyy.png" },
-        { name: "Boston Red Sox", category: "AL", icon: "./icons/bos.png" },
+    $scope.baseballTeams = [
+        { name: "New York Yankees", category: "AL", subCategory: "East", icon: "./icons/nyy.png" },
+        { name: "Boston Red Sox", category: "AL", subCategory: "East", icon: "./icons/bos.png" },
         { name: "Toronto Blue Jays", category: "AL", subCategory: "East", icon: "./icons/tor.png" },
         { name: "Baltimore Orioles", category: "AL", subCategory: "East", icon: "./icons/bal.png" },
         { name: "Tampa Bay Rays", category: "AL", subCategory: "East", icon: "./icons/tb.png" },
@@ -34,6 +34,8 @@
         { name: "San Diego Padres", category: "NL", subCategory: "west", icon: "./icons/sd.png" },
     ];
 
+    $scope.americanLeageTeams = $filter('filter')($scope.baseballTeams, { category: "AL" });
+    $scope.nationalLeageTeams = $filter('filter')($scope.baseballTeams, { category: "NL" });
 
     $scope.groupBy = function (object, level) {
         var categoryName;
@@ -52,8 +54,22 @@
         return categoryName;
     }
 
+    $scope.groupByConference = function (object, level) {
+        var categoryName;
+
+        switch (level) {
+            case 1:
+                categoryName = object.subCategory;
+                break;
+            default:
+                categoryName = null;
+        }
+
+        return categoryName;
+    }
+
     // sort categories
-    $scope.sortCategories = function(name1, name2) {
+    $scope.sortCategories = function (name1, name2) {
 
         return (name1 <= name2) ? -1 : 1;
     }
