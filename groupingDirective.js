@@ -44,7 +44,7 @@ angular.module('groupingTree', ['angular-groupSort', 'ui.bootstrap'])
                 element.append('<li style="font-style: italic; font-weight: bold; color: grey">{{category.categoryName}}</li> \
                                 <ul style="list-style-type: none;"> \
                                     <li ng-repeat="object in category.objects" style="margin-top:5px; margin-left:10px"> \
-                                        <a href="#"><img style="margin-right:5px" src="{{object.icon}}" height="16" width="16"><span>{{object.name}}<span></a></li> \
+                                        <a href="#" ng-click="clickEvent($event)"><img style="margin-right:5px" src="{{object.icon}}" height="16" width="16"><span>{{object.name}}<span></a></li> \
                                 </ul>');
             } else {
                 // add non leaf category
@@ -68,6 +68,13 @@ angular.module('groupingTree', ['angular-groupSort', 'ui.bootstrap'])
                 }
             }
             $compile(element.contents())(scope);
+        },
+        controller: function ($scope, $element, $attrs) {
+
+            $scope.clickEvent = function (event) {
+
+                event.preventDefault();
+            };
         }
     }
 })
