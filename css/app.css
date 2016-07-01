@@ -6,18 +6,31 @@
     display: inline-block;
 }
 
-.categoryName {
-    min-width: 140px;
-    display:inline-block;
-    text-align:center;
-}
-
 .title {
     width:800px;
     text-align: center; 
     text-decoration: underline;
     margin-top: 10px;
     font-size: large;
+}
+
+.categoryName {
+    position:absolute; 
+    height:25px; 
+    text-align:center; 
+    font-size:large; 
+}
+
+.divisionName {
+    position:absolute; 
+    height:25px; 
+    font-size:large;
+    margin-bottom:10px;
+}
+
+.team {
+    position:absolute; 
+    height:25px; 
 }
 
 .bowerInstall {
