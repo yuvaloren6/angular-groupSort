@@ -1,6 +1,6 @@
 ﻿/// <reference path="bower_components/angular/angular.js" />
 
-angular.module('groupingTree', ['angular-groupSort', 'ui.bootstrap'])
+angular.module('groupingDirectives', ['angular-groupSort', 'ui.bootstrap'])
 .directive('groupingTree', function () {
     return {
         scope: {

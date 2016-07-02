@@ -6,12 +6,6 @@
     display: inline-block;
 }
 
-.categoryName {
-    min-width: 140px;
-    display:inline-block;
-    text-align:center;
-}
-
 .title {
     width:800px;
     text-align: center; 
@@ -20,14 +14,54 @@
     font-size: large;
 }
 
+.categoryName {
+    position:absolute; 
+    height:25px; 
+    text-align:center; 
+    font-size:large; 
+}
+
+.divisionName {
+    position:absolute; 
+    height:25px; 
+    font-size:large;
+    margin-bottom:10px;
+}
+
+.team {
+    position:absolute; 
+    height:25px; 
+}
+
 .bowerInstall {
     border: 1px solid black;
     border-radius: 10px;
     background-color: lightgray;
+    margin-top:20px;
     margin-bottom: 100px;
     padding: 20px;
     font-size: x-large;
     min-width: 400px;
+}
+
+/* Main Level */
+ul{
+  margin-left:-10px;
+}
+
+/* Second Level */
+ul ul{
+  margin-left:-20px;
+}
+
+/* Third Level */
+ul ul ul{
+  margin-left:-30px;
+}
+
+a { color: inherit; }
+a:hover { color: inherit;
+          text-decoration:none;
 }
 
 body {

@@ -1,4 +1,4 @@
-﻿angular.module('groupExample', ['angular-groupSort', 'groupingTree'])
+﻿angular.module('groupExample', ['angular-groupSort', 'groupingDirectives'])
 .controller('exampleCtrl', function ($scope, $timeout, $filter) {
 
     $scope.baseballTeams = [
@@ -34,8 +34,8 @@
         { name: "San Diego Padres", category: "NL", subCategory: "west", icon: "./icons/sd.png" },
     ];
 
-    $scope.americanLeageTeams = $filter('filter')($scope.baseballTeams, { category: "AL" });
-    $scope.nationalLeageTeams = $filter('filter')($scope.baseballTeams, { category: "NL" });
+    $scope.americanLeagueTeams = $filter('filter')($scope.baseballTeams, { category: "AL" });
+    $scope.nationalLeagueTeams = $filter('filter')($scope.baseballTeams, { category: "NL" });
 
     $scope.groupBy = function (object, level) {
         var categoryName;
